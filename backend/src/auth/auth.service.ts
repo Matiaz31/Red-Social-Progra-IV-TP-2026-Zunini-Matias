@@ -35,19 +35,19 @@ export class AuthService {
     const accessToken = await this.jwtService.signAsync(payload);
 
     return {
-        message: 'Inicio de sesión exitoso',
-        accessToken,
-        user: {
-            id: user._id,
-            firstName: user.firstName,
-            lastName: user.lastName,
-            email: user.email,
-            username: user.username,
-            birthDate: user.birthDate,
-            description: user.description,
-            profileImage: user.profileImage,
-            role: user.role,
-        },
+      message: 'Inicio de sesión exitoso',
+      accessToken,
+      user: {
+        id: user._id,
+        firstName: user.firstName,
+        lastName: user.lastName,
+        email: user.email,
+        username: user.username,
+        birthDate: user.birthDate,
+        description: user.description,
+        profileImage: user.profileImage,
+        role: user.role,
+      },
     };
   }
 
@@ -95,6 +95,9 @@ export class AuthService {
         lastName: user.lastName,
         email: user.email,
         username: user.username,
+        birthDate: user.birthDate,
+        description: user.description,
+        profileImage: user.profileImage,
         role: user.role,
       },
     };
