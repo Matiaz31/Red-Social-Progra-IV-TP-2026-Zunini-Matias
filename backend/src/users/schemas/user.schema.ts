@@ -30,7 +30,7 @@ export class User {
   @Prop({ default: '' })
   profileImage: string;
 
-  @Prop({ enum: ['usuario', 'admin'], default: 'usuario' })
+  @Prop({ enum: ['usuario', 'administrador'], default: 'usuario' })
   role: string;
 
   @Prop({ default: true })
