@@ -7,7 +7,7 @@ import { ConfigService } from '@nestjs/config';
 import { v2 as cloudinary, UploadApiResponse } from 'cloudinary';
 import { Readable } from 'node:stream';
 
-interface UploadedFile {
+export interface UploadedFile {
   buffer: Buffer;
   mimetype: string;
   originalname: string;

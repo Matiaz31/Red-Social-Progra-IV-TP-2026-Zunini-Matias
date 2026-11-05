@@ -31,4 +31,21 @@ export class UsersService {
     const user = new this.userModel(userData);
     return user.save();
   }
+
+  
+  async findByIdentifierWithPassword(
+    identifier: string,
+  ): Promise<UserDocument | null> {
+    const normalizedIdentifier = identifier.trim().toLowerCase();
+
+    return this.userModel
+      .findOne({
+        $or: [
+          { email: normalizedIdentifier },
+          { username: normalizedIdentifier },
+        ],
+      })
+      .select('+password')
+      .exec();
+  }
 }

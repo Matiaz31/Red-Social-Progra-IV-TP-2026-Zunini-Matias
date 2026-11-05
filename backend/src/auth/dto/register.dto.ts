@@ -40,8 +40,4 @@ export class RegisterDto {
   @IsString()
   @MaxLength(300)
   description?: string;
-
-  @IsOptional()
-  @IsString()
-  profileImage?: string;
 }
