@@ -133,9 +133,15 @@
               id="profileImage"
               type="file"
               accept="image/*"
+              (change)="onProfileImageSelected($event)"
             />
+
             <span class="input-hint">
-              Elegí una imagen para personalizar tu perfil.
+              @if (selectedProfileImage) {
+              Imagen seleccionada: {{ selectedProfileImage.name }}
+              } @else {
+              Elegí una imagen para personalizar tu perfil. Máximo 5 MB.
+              }
             </span>
           </div>
 

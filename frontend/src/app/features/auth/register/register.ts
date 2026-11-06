@@ -25,6 +25,9 @@ export class Register {
   errorMessage = '';
   successMessage = '';
 
+  selectedProfileImage: File | null = null;
+  private profileImageInput: HTMLInputElement | null = null;
+
   form = this.fb.group(
     {
       firstName: ['', [Validators.required, Validators.minLength(2)]],
@@ -60,6 +63,35 @@ export class Register {
       : { passwordMismatch: true };
   }
 
+  onProfileImageSelected(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    const file = input.files?.[0] ?? null;
+
+    this.profileImageInput = input;
+    this.errorMessage = '';
+
+    if (!file) {
+      this.selectedProfileImage = null;
+      return;
+    }
+
+    if (!file.type.startsWith('image/')) {
+      this.errorMessage = 'El archivo debe ser una imagen.';
+      this.selectedProfileImage = null;
+      input.value = '';
+      return;
+    }
+
+    if (file.size > 5 * 1024 * 1024) {
+      this.errorMessage = 'La imagen no puede superar los 5 MB.';
+      this.selectedProfileImage = null;
+      input.value = '';
+      return;
+    }
+
+    this.selectedProfileImage = file;
+  }
+
   onSubmit(): void {
     this.errorMessage = '';
     this.successMessage = '';
@@ -90,21 +122,30 @@ export class Register {
 
     this.isSubmitting = true;
 
-    this.authService.register(registerData).subscribe({
+    this.authService.register(
+      registerData,
+      this.selectedProfileImage ?? undefined
+    ).subscribe({
       next: (response) => {
         this.successMessage =
           response.message || 'Registro exitoso.';
 
         this.form.reset();
+        this.selectedProfileImage = null;
+
+        if (this.profileImageInput) {
+          this.profileImageInput.value = '';
+        }
+
         this.isSubmitting = false;
       },
 
       error: (error: HttpErrorResponse) => {
-        this.errorMessage =
-          error.error?.message ||
-          'No se pudo completar el registro. Intentá nuevamente.';
+        this.errorMessage = Array.isArray(error.error?.message)
+          ? error.error.message.join(', ')
+          : error.error?.message ||
+            'No se pudo completar el registro. Intentá nuevamente.';
 
-        // No limpiamos el formulario.
         this.isSubmitting = false;
       }
     });

@@ -34,17 +34,32 @@ export class AuthService {
 
   constructor(private http: HttpClient) {}
 
-  register(data: RegisterData): Observable<AuthResponse> {
+  register(
+    data: RegisterData,
+    profileImage?: File
+  ): Observable<AuthResponse> {
+    const formData = new FormData();
+
+    Object.entries(data).forEach(([key, value]) => {
+      if (value !== undefined && value !== null) {
+        formData.append(key, value);
+      }
+    });
+
+    if (profileImage) {
+      formData.append('profileImage', profileImage);
+    }
+
     return this.http.post<AuthResponse>(
       `${this.apiUrl}/register`,
-      data
+      formData
     );
   }
 
-  login(email: string, password: string): Observable<AuthResponse> {
+  login(identifier: string, password: string): Observable<AuthResponse> {
     return this.http.post<AuthResponse>(
       `${this.apiUrl}/login`,
-      { email, password }
+      { identifier, password }
     );
   }
 }
