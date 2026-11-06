@@ -1,8 +1,6 @@
-
 <main class="auth-page">
   <section class="auth-layout">
 
-    <!-- Panel de presentación -->
     <div class="auth-intro">
       <div class="brand">
         <span class="brand-icon">✿</span>
@@ -25,7 +23,6 @@
       </div>
     </div>
 
-    <!-- Panel de inicio de sesión -->
     <div class="auth-form-container">
       <div class="auth-form">
 
@@ -35,17 +32,20 @@
           <p>Ingresá tus datos para continuar.</p>
         </div>
 
-        <form>
+        <form [formGroup]="form" (ngSubmit)="onSubmit()">
+
           <div class="form-group">
-            <label class="form-label" for="identifier">
-              Correo electrónico o usuario
+            <label class="form-label" for="email">
+              Correo electrónico
             </label>
 
             <input
               class="form-control"
-              id="identifier"
-              type="text"
-              placeholder="Ingresá tu correo o usuario"
+              id="email"
+              type="email"
+              formControlName="email"
+              placeholder="Ingresá tu correo electrónico"
+              autocomplete="email"
             />
           </div>
 
@@ -58,18 +58,29 @@
               class="form-control"
               id="password"
               type="password"
+              formControlName="password"
               placeholder="Ingresá tu contraseña"
+              autocomplete="current-password"
             />
           </div>
 
-          <button class="btn btn-primary login-button" type="submit">
-            Iniciar sesión
+          @if (errorMessage) {
+            <p class="form-error">{{ errorMessage }}</p>
+          }
+
+          <button
+            class="btn btn-primary login-button"
+            type="submit"
+            [disabled]="form.invalid || isSubmitting"
+          >
+            {{ isSubmitting ? 'Ingresando...' : 'Iniciar sesión' }}
           </button>
+
         </form>
 
         <div class="auth-switch">
           ¿Todavía no tenés una cuenta?
-          <a routerLink="/register">Registrate</a>
+          <a routerLink="/register" class="auth-link">Registrate</a>
         </div>
 
       </div>
