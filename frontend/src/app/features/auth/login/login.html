@@ -1,0 +1,90 @@
+<main class="auth-page">
+  <section class="auth-layout">
+
+    <div class="auth-intro">
+      <div class="brand">
+        <span class="brand-icon">✿</span>
+        <span>Mi Red Social</span>
+      </div>
+
+      <div class="intro-content">
+        <span class="intro-label">UN ESPACIO PARA CONECTAR</span>
+
+        <h1>Las mejores conexiones empiezan acá.</h1>
+
+        <p>
+          Compartí tus ideas, conocé personas y formá parte
+          de una comunidad donde todos tienen algo para aportar.
+        </p>
+      </div>
+
+      <div class="intro-footer">
+        Un espacio para compartir y crecer.
+      </div>
+    </div>
+
+    <div class="auth-form-container">
+      <div class="auth-form">
+
+        <div class="form-heading">
+          <span class="welcome-label">¡Qué bueno verte!</span>
+          <h2>Iniciar sesión</h2>
+          <p>Ingresá tus datos para continuar.</p>
+        </div>
+
+        <form [formGroup]="form" (ngSubmit)="onSubmit()">
+
+          <div class="form-group">
+            <label class="form-label" for="email">
+              Correo electrónico
+            </label>
+
+            <input
+              class="form-control"
+              id="identifier"
+              type="text"
+              formControlName="identifier"
+              placeholder="Ingresá tu correo electrónico"
+              autocomplete="email"
+            />
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="password">
+              Contraseña
+            </label>
+
+            <input
+              class="form-control"
+              id="password"
+              type="password"
+              formControlName="password"
+              placeholder="Ingresá tu contraseña"
+              autocomplete="current-password"
+            />
+          </div>
+
+          @if (errorMessage) {
+            <p class="form-error">{{ errorMessage }}</p>
+          }
+
+          <button
+            class="btn btn-primary login-button"
+            type="submit"
+            [disabled]="form.invalid || isSubmitting"
+          >
+            {{ isSubmitting ? 'Ingresando...' : 'Iniciar sesión' }}
+          </button>
+
+        </form>
+
+        <div class="auth-switch">
+          ¿Todavía no tenés una cuenta?
+          <a routerLink="/register" class="auth-link">Registrate</a>
+        </div>
+
+      </div>
+    </div>
+
+  </section>
+</main>
