@@ -176,3 +176,16 @@
     padding: 36px 28px;
   }
 }
+
+.form-error {
+  color:black;
+  background-color: #fff0f0;
+  border: 1px solid #f3b5b5;
+  border-left: 4px solid #d32f2f;
+  border-radius: 8px;
+  padding: 12px 14px;
+  margin: 12px 0 16px;
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 1.5;
+}

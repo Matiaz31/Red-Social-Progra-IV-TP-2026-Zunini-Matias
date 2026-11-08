@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, ChangeDetectorRef } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import {
   AbstractControl,
@@ -17,7 +17,7 @@ import { AuthService, RegisterData } from '../../../core/service/auth.service';
   styleUrl: './register.scss',
 })
 export class Register {
-
+  private readonly cdr = inject(ChangeDetectorRef);
   private readonly fb = inject(FormBuilder);
   private readonly authService = inject(AuthService);
 
@@ -138,6 +138,7 @@ export class Register {
         }
 
         this.isSubmitting = false;
+        this.cdr.markForCheck()
       },
 
       error: (error: HttpErrorResponse) => {
@@ -147,6 +148,7 @@ export class Register {
             'No se pudo completar el registro. Intentá nuevamente.';
 
         this.isSubmitting = false;
+        this.cdr.markForCheck();
       }
     });
   }
