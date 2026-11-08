@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
+import { environment } from '../../../environments/environment';
 
 export interface RegisterData {
   firstName: string;
@@ -36,7 +37,7 @@ export interface AuthResponse {
 })
 export class AuthService {
 
-  private readonly apiUrl = 'http://localhost:3000/auth';
+  private readonly apiUrl = environment.apiUrl;
 
   constructor(
     private http: HttpClient,
