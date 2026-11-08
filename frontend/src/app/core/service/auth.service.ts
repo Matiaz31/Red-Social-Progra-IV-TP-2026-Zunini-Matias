@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 
 export interface RegisterData {
@@ -12,17 +13,22 @@ export interface RegisterData {
   description?: string;
 }
 
+export interface AuthUser {
+  id: string;
+  firstName: string;
+  lastName: string;
+  email: string;
+  username: string;
+  birthDate: string;
+  description?: string;
+  profileImage?: string;
+  role: string;
+}
+
 export interface AuthResponse {
   message: string;
   accessToken?: string;
-  user?: {
-    id: string;
-    firstName: string;
-    lastName: string;
-    email: string;
-    username: string;
-    role: string;
-  };
+  user?: AuthUser;
 }
 
 @Injectable({
@@ -32,7 +38,10 @@ export class AuthService {
 
   private readonly apiUrl = 'http://localhost:3000/auth';
 
-  constructor(private http: HttpClient) {}
+  constructor(
+    private http: HttpClient,
+    private router: Router
+  ) {}
 
   register(
     data: RegisterData,
@@ -61,5 +70,27 @@ export class AuthService {
       `${this.apiUrl}/login`,
       { identifier, password }
     );
+  }
+
+  saveSession(response: AuthResponse): void {
+    if (response.accessToken) {
+      localStorage.setItem('accessToken', response.accessToken);
+    }
+
+    if (response.user) {
+      localStorage.setItem('currentUser', JSON.stringify(response.user));
+    }
+  }
+
+  getCurrentUser(): AuthUser | null {
+    const user = localStorage.getItem('currentUser');
+
+    return user ? JSON.parse(user) as AuthUser : null;
+  }
+
+  logout(): void {
+    localStorage.removeItem('accessToken');
+    localStorage.removeItem('currentUser');
+    this.router.navigate(['/login']);
   }
 }

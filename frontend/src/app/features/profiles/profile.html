@@ -1,0 +1,130 @@
+<main class="profile-page">
+  <div class="app-layout">
+
+    <!-- Menú lateral -->
+    <aside
+      class="left-sidebar expanded"
+      [class.expanded]="isSidebarExpanded"
+      (mouseenter)="onSidebarMouseEnter()"
+      (mouseleave)="onSidebarMouseLeave()"
+    >
+      <div class="brand">
+        <span class="brand-icon">S</span>
+        <span class="brand-name">Social</span>
+      </div>
+
+      <nav class="side-nav">
+        <a class="side-link" routerLink="/publications">
+          <span class="side-icon">⌂</span>
+          <span class="side-label">Publicaciones</span>
+        </a>
+
+        <a class="side-link active" routerLink="/profile">
+          <span class="side-icon">◎</span>
+          <span class="side-label">Mi perfil</span>
+        </a>
+      </nav>
+
+      <div class="sidebar-footer">
+        <div class="user-info">
+          <div class="user-avatar">U</div>
+          <div class="user-details">
+            <span class="user-name">Usuario</span>
+            <span class="user-handle">@usuario</span>
+          </div>
+        </div>
+
+        <button
+          class="logout-button"
+          type="button"
+          (click)="logout()"
+          title="Cerrar sesión"
+        >
+          <span class="side-icon">↪</span>
+          <span class="side-label">Cerrar sesión</span>
+        </button>
+      </div>
+    </aside>
+
+    <!-- Contenido principal -->
+    <div class="main-area">
+
+      <section class="profile-layout">
+
+        <!-- Información del perfil -->
+        <section class="profile-content">
+
+          <div class="section-heading">
+            <h2>Mi perfil</h2>
+            <p>Tu información personal en Social.</p>
+          </div>
+
+          <div class="profile-card">
+
+            <div class="profile-cover"></div>
+
+            <div class="profile-information">
+              <div class="profile-avatar">U</div>
+
+              <div class="profile-name">
+                <h1>Usuario Ejemplo</h1>
+                <span>@usuario</span>
+              </div>
+
+              <p class="profile-description">
+                ¡Hola! Este es mi espacio personal en Social.
+              </p>
+            </div>
+
+          </div>
+
+          <section class="personal-information">
+            <h3>Información personal</h3>
+
+            <div class="information-grid">
+
+              <div class="information-item">
+                <span>Nombre</span>
+                <strong>Usuario</strong>
+              </div>
+
+              <div class="information-item">
+                <span>Apellido</span>
+                <strong>Ejemplo</strong>
+              </div>
+
+              <div class="information-item">
+                <span>Nombre de usuario</span>
+                <strong>@usuario</strong>
+              </div>
+
+              <div class="information-item">
+                <span>Correo electrónico</span>
+                <strong>usuario@email.com</strong>
+              </div>
+
+              <div class="information-item">
+                <span>Fecha de nacimiento</span>
+                <strong>15/05/2000</strong>
+              </div>
+
+            </div>
+          </section>
+
+        </section>
+
+        <!-- Panel lateral -->
+        <aside class="profile-sidebar">
+          <div class="profile-sidebar-card">
+            <span class="sidebar-icon">☘</span>
+            <h3>Conocé mas personas</h3>
+            <p>
+              Aquí podés ver nuevos usuarios a los que seguir y estar más conectado con la comunidad.
+            </p>
+          </div>
+        </aside>
+
+      </section>
+    </div>
+  </div>
+</main>

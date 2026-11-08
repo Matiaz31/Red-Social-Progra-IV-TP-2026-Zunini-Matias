@@ -44,16 +44,21 @@ export class Login {
 
     this.authService.login(identifier!, password!).subscribe({
       next: (response) => {
-        if (!response.accessToken) {
-          this.errorMessage = 'El servidor no devolvió un token de acceso.';
-          this.isSubmitting = false;
-          return;
-        }
-
-        localStorage.setItem('accessToken', response.accessToken);
-
+      if (!response.accessToken) {
+        this.errorMessage = 'El servidor no devolvió un token de acceso.';
         this.isSubmitting = false;
-      },
+        return;
+      }
+
+      console.log('Datos recibidos del usuario:', response.user);
+      console.log('Respuesta completa del Login:', response);
+
+
+      localStorage.setItem('accessToken', response.accessToken);
+
+      this.isSubmitting = false;
+      this.router.navigate(['/publications']);
+    },
 
       error: (error: HttpErrorResponse) => {
         this.errorMessage = Array.isArray(error.error?.message)
