@@ -1,0 +1,422 @@
+.profile-page {
+  min-height: 100vh;
+  background: #f7f8f4;
+  color: #34443b;
+}
+
+.app-layout {
+  display: flex;
+  min-height: 100vh;
+}
+
+/* Menú lateral */
+
+.left-sidebar {
+  width: 72px;
+  min-width: 72px;
+  height: 100vh;
+  position: sticky;
+  top: 0;
+  display: flex;
+  flex-direction: column;
+  background: #ffffff;
+  border-right: 1px solid #e8ece6;
+  padding: 22px 12px;
+  overflow: hidden;
+  transition: width 0.3s ease, min-width 0.3s ease;
+  z-index: 10;
+
+  &.expanded {
+    width: 220px;
+    min-width: 220px;
+  }
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-height: 40px;
+  padding-left: 5px;
+  margin-bottom: 48px;
+  white-space: nowrap;
+}
+
+.brand-icon {
+  width: 36px;
+  min-width: 36px;
+  height: 36px;
+  display: grid;
+  place-items: center;
+  border-radius: 12px;
+  background: #718b78;
+  color: #ffffff;
+  font-weight: 700;
+  font-size: 18px;
+}
+
+.brand-name {
+  font-size: 22px;
+  font-weight: 700;
+  color: #34443b;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.left-sidebar.expanded .brand-name {
+  opacity: 1;
+}
+
+.side-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.side-link {
+  min-height: 46px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 0 10px;
+  border-radius: 12px;
+  color: #7b887e;
+  text-decoration: none;
+  white-space: nowrap;
+  font-size: 15px;
+  transition: background 0.2s ease, color 0.2s ease;
+
+  &:hover,
+  &.active {
+    background: #edf2eb;
+    color: #617b68;
+  }
+
+  &.active {
+    font-weight: 700;
+  }
+}
+
+.side-icon {
+  min-width: 26px;
+  text-align: center;
+  font-size: 25px;
+}
+
+.side-label {
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.left-sidebar.expanded .side-label {
+  opacity: 1;
+}
+
+.sidebar-footer {
+  margin-top: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 10px 5px;
+  white-space: nowrap;
+}
+
+.user-info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-height: 52px;
+}
+
+.logout-button {
+  width: 100%;
+  min-height: 46px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 0 10px;
+  border: none;
+  border-radius: 12px;
+  background: transparent;
+  color: #a36c68;
+  font-family: inherit;
+  font-size: 15px;
+  text-align: left;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background 0.2s ease, color 0.2s ease;
+
+  &:hover {
+    background: #f8eeec;
+    color: #92534e;
+  }
+}
+
+.user-avatar {
+  width: 38px;
+  min-width: 38px;
+  height: 38px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: #e5ece3;
+  color: #617b68;
+  font-weight: 700;
+}
+
+.user-details {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.left-sidebar.expanded .user-details {
+  opacity: 1;
+}
+
+.user-name {
+  font-size: 15px;
+  font-weight: 700;
+  color: #45574a;
+}
+
+.user-handle {
+  font-size: 13px;
+  color: #929b93;
+}
+
+/* Área principal */
+
+.main-area {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  overflow-x: hidden;
+}
+
+.topbar {
+  height: 76px;
+  min-height: 76px;
+  display: flex;
+  align-items: center;
+  padding: 0 4%;
+  background: #ffffff;
+  border-bottom: 1px solid #e8ece6;
+}
+
+.eyebrow {
+  margin: 0;
+  color: #829486;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+}
+
+/* Contenido del perfil */
+
+.profile-layout {
+  flex: 1;
+  min-width: 0;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 260px;
+  gap: 28px;
+  align-items: start;
+  padding: 38px 4%;
+  transition: grid-template-columns 0.3s ease;
+}
+
+.app-layout:has(.left-sidebar.expanded) .profile-layout {
+  grid-template-columns: minmax(0, 1fr) 210px;
+}
+
+.profile-content {
+  min-width: 0;
+}
+
+.section-heading {
+  margin-bottom: 20px;
+
+  h2 {
+    margin: 0 0 6px;
+    font-size: 21px;
+    font-weight: 700;
+  }
+
+  p {
+    margin: 0;
+    color: #879188;
+    font-size: 15px;
+  }
+}
+
+/* Tarjeta del perfil */
+
+.profile-card {
+  overflow: hidden;
+  background: #ffffff;
+  border: 1px solid #e9ede7;
+  border-radius: 18px;
+}
+
+.profile-cover {
+  height: 145px;
+  background: linear-gradient(120deg, #dce8da, #aebfae);
+}
+
+.profile-information {
+  padding: 0 28px 26px;
+}
+
+.profile-avatar {
+  width: 100px;
+  height: 100px;
+  margin-top: -50px;
+  margin-bottom: 16px;
+  position: relative;
+  display: grid;
+  place-items: center;
+  border: 5px solid #ffffff;
+  border-radius: 50%;
+  background: #e5ece3;
+  color: #617b68;
+  font-size: 34px;
+  font-weight: 700;
+}
+
+.profile-name {
+  h1 {
+    margin: 0 0 5px;
+    color: #34443b;
+    font-size: 24px;
+    font-weight: 700;
+  }
+
+  span {
+    color: #829486;
+    font-size: 14px;
+  }
+}
+
+.profile-description {
+  margin: 18px 0 0;
+  color: #78877b;
+  font-size: 15px;
+  line-height: 1.7;
+}
+
+/* Información personal */
+
+.personal-information {
+  margin-top: 26px;
+  padding: 26px;
+  background: #ffffff;
+  border: 1px solid #e9ede7;
+  border-radius: 18px;
+
+  h3 {
+    margin: 0 0 24px;
+    color: #45574a;
+    font-size: 19px;
+  }
+}
+
+.information-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 24px;
+}
+
+.information-item {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-width: 0;
+
+  span {
+    color: #929b93;
+    font-size: 13px;
+  }
+
+  strong {
+    color: #45574a;
+    font-size: 15px;
+    font-weight: 600;
+    overflow-wrap: anywhere;
+  }
+}
+
+/* Panel verde */
+
+.profile-sidebar-card {
+  padding: 22px 18px;
+  background: #eaf0e8;
+  border: 1px solid #e0e9de;
+  border-radius: 18px;
+
+  .sidebar-icon {
+    color: #718b78;
+    font-size: 25px;
+  }
+
+  h3 {
+    margin: 16px 0 10px;
+    color: #45574a;
+    font-size: 18px;
+  }
+
+  p {
+    margin: 0;
+    color: #78877b;
+    font-size: 14px;
+    line-height: 1.7;
+  }
+}
+
+/* Responsive */
+
+@media (max-width: 760px) {
+  .left-sidebar {
+    width: 60px;
+    min-width: 60px;
+    padding: 18px 7px;
+
+    &.expanded {
+      width: 180px;
+      min-width: 180px;
+    }
+  }
+
+  .brand {
+    padding-left: 4px;
+  }
+
+  .profile-layout,
+  .app-layout:has(.left-sidebar.expanded) .profile-layout {
+    grid-template-columns: 1fr;
+    padding: 26px 5%;
+    gap: 20px;
+  }
+
+  .information-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .topbar {
+    height: 64px;
+    min-height: 64px;
+  }
+}
+
+@media (max-width: 420px) {
+  .profile-information {
+    padding-right: 20px;
+    padding-left: 20px;
+  }
+
+  .personal-information {
+    padding: 20px;
+  }
+}
