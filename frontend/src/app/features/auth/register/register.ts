@@ -38,7 +38,14 @@ export class Register {
         Validators.minLength(3),
         Validators.maxLength(20)
       ]],
-      password: ['', [Validators.required, Validators.minLength(8)]],
+      password: [
+        '',
+        [
+          Validators.required,
+          Validators.minLength(8),
+          Validators.pattern(/^(?=.*[A-Z])(?=.*\d).+$/)
+        ]
+      ],
       confirmPassword: ['', Validators.required],
       birthDate: ['', Validators.required],
       description: ['']

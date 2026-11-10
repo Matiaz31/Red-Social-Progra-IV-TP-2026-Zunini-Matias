@@ -16,8 +16,13 @@ import { PostsModule } from './posts/posts.module';
       inject: [ConfigService],
       useFactory: (configService: ConfigService) => {
         const uri = configService.get<string>('MONGODB_URI');
-      return { uri };
-    },
+
+        if (!uri) {
+          throw new Error('La variable de entorno MONGODB_URI no está configurada');
+        }
+
+        return { uri };
+      },
     }),
 
     AuthModule,

@@ -368,3 +368,15 @@
 
   box-shadow: 0 3px 10px rgba(55, 110, 60, 0.10);
 }
+
+/* ERRORES DE CAMPOS */
+
+.field-error {
+  display: block;
+  width: 100%;
+  margin-top: 2px;
+  color: #c62828;
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1.4;
+}

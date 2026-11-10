@@ -55,7 +55,7 @@ export class Login {
         console.log('Datos recibidos del usuario:', response.user);
         console.log('Respuesta completa del Login:', response);
 
-        localStorage.setItem('accessToken', response.accessToken);
+        this.authService.saveSession(response);
 
         this.isSubmitting = false;
         this.router.navigate(['/publications']);
