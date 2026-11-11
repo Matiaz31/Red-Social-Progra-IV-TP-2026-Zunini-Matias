@@ -1,3 +1,4 @@
+
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { HydratedDocument, Types } from 'mongoose';
 import { User } from '../../users/schemas/user.schema';
@@ -17,6 +18,12 @@ export class Post {
 
   @Prop({ default: '' })
   image: string;
+
+  @Prop({
+    type: [{ type: Types.ObjectId, ref: User.name }],
+    default: [],
+  })
+  likes: Types.ObjectId[];
 
   @Prop({ default: true })
   isActive: boolean;

@@ -1,0 +1,65 @@
+<article class="post-card">
+  <div class="post-header">
+    <div class="post-avatar">U</div>
+
+    <div class="post-author">
+      <strong>Usuario</strong>
+      <small>{{ post.createdAt | date:'dd/MM/yyyy HH:mm' }}</small>
+    </div>
+  </div>
+
+  <div class="post-content">
+    <h3>{{ post.title }}</h3>
+
+    @if (post.image) {
+      <img
+        class="post-image"
+        [src]="post.image"
+        [alt]="'Imagen de la publicación: ' + post.title"
+      />
+    }
+    
+    <p>{{ post.message }}</p>
+  </div>
+
+  
+  <div class="post-footer">
+    <button
+      type="button"
+      class="like-button"
+      [class.liked]="hasLiked"
+      [disabled]="loadingLike"
+      (click)="toggleLike()"
+    >
+      <span>♥</span>
+      {{ post.likesCount }} likes
+    </button>
+
+    @if (isOwner) {
+      <div class="post-actions">
+        <button
+          type="button"
+          class="actions-button"
+          aria-label="Opciones de publicación"
+          (click)="showActions = !showActions"
+        >
+          ⋮
+        </button>
+
+        @if (showActions) {
+          <div class="actions-menu">
+            <button
+              type="button"
+              class="delete-button"
+              [disabled]="loadingDelete"
+              (click)="deletePost()"
+            >
+              {{ loadingDelete ? 'Eliminando...' : 'Eliminar publicación' }}
+            </button>
+          </div>
+        }
+      </div>
+    }
+  </div>
+
+</article>

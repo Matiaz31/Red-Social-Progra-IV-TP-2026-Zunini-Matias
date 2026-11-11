@@ -394,3 +394,9 @@
     padding: 30px 18px;
   }
 }
+
+.posts-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}

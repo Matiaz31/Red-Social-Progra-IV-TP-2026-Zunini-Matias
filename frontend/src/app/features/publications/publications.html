@@ -1,7 +1,7 @@
+
 <main class="publications-page">
   <div class="app-layout">
 
-    <!-- Menú lateral -->
     <aside
       class="left-sidebar expanded"
       [class.expanded]="isSidebarExpanded"
@@ -27,10 +27,17 @@
 
       <div class="sidebar-footer">
         <div class="user-info">
-          <div class="user-avatar">U</div>
+          <div class="user-avatar">
+            {{ currentUser?.firstName?.charAt(0) || 'U' }}
+          </div>
+
           <div class="user-details">
-            <span class="user-name">Usuario</span>
-            <span class="user-handle">@usuario</span>
+            <span class="user-name">
+              {{ currentUser?.firstName || 'Usuario' }}
+            </span>
+            <span class="user-handle">
+              {{ currentUser?.username ? '@' + currentUser.username : '@usuario' }}
+            </span>
           </div>
         </div>
 
@@ -46,12 +53,9 @@
       </div>
     </aside>
 
-    <!-- Contenido principal -->
     <div class="main-area">
-
       <section class="publications-layout">
 
-        <!-- Feed -->
         <section class="feed">
           <div class="section-heading">
             <div>
@@ -60,17 +64,40 @@
             </div>
           </div>
 
-          <div class="empty-state">
-            <div class="empty-icon">✦</div>
-            <h3>¡Tu comunidad te espera!</h3>
-            <p>
-              Todavía no hay publicaciones para mostrar.
-              Volvé más tarde para descubrir novedades.
-            </p>
-          </div>
+          @if (loading) {
+            <div class="empty-state">
+              <h3>Cargando publicaciones...</h3>
+              <p>Estamos buscando las últimas novedades.</p> 
+            </div>
+          } @else if (errorMessage) {
+            <div class="empty-state">
+              <h3>No pudimos cargar las publicaciones</h3>
+              <p>{{ errorMessage }}</p>
+              <button type="button" (click)="loadPosts()">
+                Reintentar
+              </button>
+            </div>
+          } @else if (posts.length === 0) {
+            <div class="empty-state">
+              <div class="empty-icon">✦</div>
+              <h3>¡Tu comunidad te espera!</h3>
+              <p>
+                Todavía no hay publicaciones para mostrar.
+                Volvé más tarde para descubrir novedades.
+              </p>
+            </div>
+          } @else {
+            <div class="posts-list">
+              @for (post of posts; track post._id) {
+                <app-post-card
+                [post]="post"
+                (deleted)="onPostDeleted($event)"
+              />
+              }
+            </div>
+          }
         </section>
 
-        <!-- Panel de tendencias -->
         <aside class="trending-sidebar">
           <div class="trending-card">
             <h3>Explorar tendencias</h3>
