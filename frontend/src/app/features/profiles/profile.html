@@ -64,15 +64,24 @@
             <div class="profile-cover"></div>
 
             <div class="profile-information">
-              <div class="profile-avatar">U</div>
+              <div class="profile-avatar">
+                @if (currentUser?.profileImage) {
+                  <img
+                    [src]="currentUser?.profileImage"
+                    alt="Foto de perfil"
+                  />
+                } @else {
+                  {{ currentUser?.firstName?.charAt(0) }}
+                }
+              </div>
 
               <div class="profile-name">
-                <h1>Usuario Ejemplo</h1>
-                <span>@usuario</span>
+                <h1>{{ currentUser?.firstName }} {{ currentUser?.lastName }}</h1>
+                <span>@{{ currentUser?.username }}</span>
               </div>
 
               <p class="profile-description">
-                ¡Hola! Este es mi espacio personal en Social.
+                {{ currentUser?.description || 'Todavía no agregaste una descripción.' }}
               </p>
             </div>
 
@@ -85,32 +94,89 @@
 
               <div class="information-item">
                 <span>Nombre</span>
-                <strong>Usuario</strong>
+                <strong>{{ currentUser?.firstName }}</strong>
               </div>
 
               <div class="information-item">
                 <span>Apellido</span>
-                <strong>Ejemplo</strong>
+                <strong>{{ currentUser?.lastName }}</strong>
               </div>
 
               <div class="information-item">
                 <span>Nombre de usuario</span>
-                <strong>@usuario</strong>
+                <strong>@{{ currentUser?.username }}</strong>
               </div>
 
               <div class="information-item">
                 <span>Correo electrónico</span>
-                <strong>usuario@email.com</strong>
+                <strong>{{ currentUser?.email }}</strong>
               </div>
 
               <div class="information-item">
                 <span>Fecha de nacimiento</span>
-                <strong>15/05/2000</strong>
+                <strong>{{ currentUser?.birthDate | date:'dd/MM/yyyy' }}</strong>
               </div>
 
             </div>
           </section>
+          <section class="my-publications">
+            <div class="section-heading">
+              <h2>Mis publicaciones</h2>
+              <p>Estas son tus últimas 3 publicaciones.</p>
+            </div>
 
+            @if (loadingPosts) {
+              <p>Cargando publicaciones...</p>
+            } @else if (posts.length === 0) {
+              <div class="empty-publications">
+                <div class="empty-publications-icon">
+                  <span>✎</span>
+                </div>
+
+                <h3>Todavía no hay publicaciones</h3>
+
+                <p>
+                  Cuando compartas algo, tus publicaciones más recientes
+                  aparecerán acá.
+                </p>
+
+              </div>
+            } @else {
+              <div class="publications-list">
+                @for (post of posts; track post._id) {
+                  <div class="profile-post">
+                    <app-post-card [post]="post" />
+
+                    <section class="post-comments">
+                      <h4>Comentarios</h4>
+
+                      @if (post.comments?.length) {
+                        @for (comment of post.comments; track comment._id) {
+                          <div class="comment-item">
+                            <div class="comment-header">
+                              <strong>@{{ comment.userId.username }}</strong>
+
+                              <span>
+                                {{ comment.createdAt | date:'dd/MM/yyyy HH:mm' }}
+                              </span>
+                            </div>
+
+                            <p>{{ comment.message }}</p>
+
+                            @if (comment.modified) {
+                              <small>Modificado</small>
+                            }
+                          </div>
+                        }
+                      } @else {
+                        <p class="no-comments">Todavía no hay comentarios.</p>
+                      }
+                    </section>
+                  </div>
+                }
+              </div>
+            }
+          </section>
         </section>
 
         <!-- Panel lateral -->

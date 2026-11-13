@@ -6,6 +6,7 @@ import { environment } from '../../../environments/environment';
 export interface Post {
   _id: string;
   userId: string;
+  authorUsername: string;
   title: string;
   message: string;
   image: string;
@@ -14,6 +15,7 @@ export interface Post {
   isActive: boolean;
   createdAt: string;
   updatedAt: string;
+  comments: Comment[];
 }
 
 export interface PostsResponse {
@@ -21,6 +23,21 @@ export interface PostsResponse {
   total: number;
   offset: number;
   limit: number;
+}
+
+export interface CommentAuthor {
+  _id: string;
+  username: string;
+}
+
+export interface Comment {
+  _id: string;
+  postId: string;
+  userId: CommentAuthor;
+  message: string;
+  modified: boolean;
+  createdAt: string;
+  updatedAt: string;
 }
 
 @Injectable({

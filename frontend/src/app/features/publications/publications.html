@@ -1,4 +1,3 @@
-
 <main class="publications-page">
   <div class="app-layout">
 
@@ -62,7 +61,26 @@
               <h2>Publicaciones</h2>
               <p>Lo que está pasando en la comunidad.</p>
             </div>
+
+            <div class="sort-control">
+              <label for="sortBy">Ordenar por:</label>
+
+              <select
+                id="sortBy"
+                [value]="sortBy"
+                (change)="sortBy = $any($event.target).value; offset = 0; loadPosts()"
+              >
+                <option value="date">Más recientes</option>
+                <option value="likes">Más populares</option>
+              </select>
+            </div>
           </div>
+          @if (successMessage) {
+            <div class="success-toast" role="status">
+              <span>✓</span>
+              {{ successMessage }}
+            </div>
+          }
 
           @if (loading) {
             <div class="empty-state">
@@ -90,11 +108,35 @@
             <div class="posts-list">
               @for (post of posts; track post._id) {
                 <app-post-card
-                [post]="post"
-                (deleted)="onPostDeleted($event)"
-              />
+                  [post]="post"
+                  (deleted)="onPostDeleted($event)"
+                />
               }
             </div>
+
+            @if (total > limit) {
+              <div class="pagination">
+                <button
+                  type="button"
+                  [disabled]="offset === 0 || loading"
+                  (click)="previousPage()"
+                >
+                  Anterior
+                </button>
+
+                <span>
+                  Página {{ offset / limit + 1 }} de {{ totalPages }}
+                </span>
+
+                <button
+                  type="button"
+                  [disabled]="offset + limit >= total || loading"
+                  (click)="nextPage()"
+                >
+                  Siguiente
+                </button>
+              </div>
+            }
           }
         </section>
 

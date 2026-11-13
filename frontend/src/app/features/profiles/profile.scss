@@ -278,12 +278,20 @@
   position: relative;
   display: grid;
   place-items: center;
+  overflow: hidden;
   border: 5px solid #ffffff;
   border-radius: 50%;
   background: #e5ece3;
   color: #617b68;
   font-size: 34px;
   font-weight: 700;
+  .profile-avatar img {
+    width: 100%;
+    height: 100%;
+    display: block;
+    border-radius: 50%;
+    object-fit: cover;
+  }
 }
 
 .profile-name {
@@ -419,4 +427,132 @@
   .personal-information {
     padding: 20px;
   }
+}
+
+/* Mis publicaciones */
+
+.my-publications {
+  margin-top: 32px;
+
+  .section-heading {
+    margin-bottom: 18px;
+  }
+}
+
+.empty-publications {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 42px 24px;
+  background: #ffffff;
+  border: 1px solid #e9ede7;
+  border-radius: 18px;
+  text-align: center;
+
+  .empty-publications-icon {
+    width: 58px;
+    height: 58px;
+    display: grid;
+    place-items: center;
+    margin-bottom: 18px;
+    border-radius: 18px;
+    background: #edf2eb;
+    color: #718b78;
+    font-size: 30px;
+  }
+
+  h3 {
+    margin: 0 0 10px;
+    color: #45574a;
+    font-size: 18px;
+    font-weight: 700;
+  }
+
+  p {
+    max-width: 340px;
+    margin: 0;
+    color: #879188;
+    font-size: 14px;
+    line-height: 1.7;
+  }
+
+}
+
+/* Publicaciones y comentarios */
+
+.profile-post {
+  margin-bottom: 24px;
+  overflow: hidden;
+  background: #ffffff;
+  border: 1px solid #e9ede7;
+  border-radius: 18px;
+}
+
+.post-comments {
+  margin: 0;
+  padding: 16px 20px;
+  background: #f7f8f4;
+  border-top: 1px solid #e9ede7;
+
+  h4 {
+    margin: 0 0 14px;
+    color: #45574a;
+    font-size: 15px;
+    font-weight: 700;
+  }
+}
+
+.comment-item {
+  padding: 12px 0;
+  border-bottom: 1px solid #e5eae3;
+
+  &:last-child {
+    padding-bottom: 0;
+    border-bottom: none;
+  }
+
+  &:first-of-type {
+    padding-top: 0;
+  }
+
+  p {
+    margin: 8px 0 0;
+    color: #59685d;
+    font-size: 14px;
+    line-height: 1.6;
+    overflow-wrap: anywhere;
+  }
+
+  small {
+    display: inline-block;
+    margin-top: 6px;
+    color: #829486;
+    font-size: 12px;
+  }
+}
+
+.comment-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+
+  strong {
+    color: #617b68;
+    font-size: 13px;
+  }
+
+  span {
+    color: #929b93;
+    font-size: 12px;
+  }
+}
+
+.no-comments {
+  margin: 0;
+  color: #929b93;
+  font-size: 13px;
+  font-style: italic;
 }

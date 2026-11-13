@@ -26,6 +26,8 @@ export class Publications implements OnInit, OnDestroy {
   limit = 10;
   total = 0;
 
+  successMessage = '';
+
   constructor(
     private cdr: ChangeDetectorRef,
     private authService: AuthService,
@@ -52,10 +54,11 @@ export class Publications implements OnInit, OnDestroy {
       .getPosts(this.sortBy, this.offset, this.limit)
       .subscribe({
         next: (response) => {
-          this.posts = response.posts;
-          this.total = response.total;
-          this.loading = false;
-        },
+        this.posts = response.posts;
+        this.total = response.total;
+        this.loading = false;
+        this.cdr.detectChanges();
+      },
         error: (error) => {
           console.error('Error al cargar publicaciones:', error);
           this.errorMessage =
@@ -76,10 +79,19 @@ export class Publications implements OnInit, OnDestroy {
       this.isSidebarExpanded = false;
     }
   }
-
+    
   onPostDeleted(postId: string): void {
     this.posts = this.posts.filter((post) => post._id !== postId);
     this.total--;
+
+    this.successMessage = 'Publicación eliminada correctamente.';
+
+    setTimeout(() => {
+      this.successMessage = '';
+      this.cdr.detectChanges();
+    }, 3000);
+
+    this.cdr.detectChanges();
   }
 
   logout(): void {
@@ -90,5 +102,23 @@ export class Publications implements OnInit, OnDestroy {
     if (this.sidebarTimeout) {
       clearTimeout(this.sidebarTimeout);
     }
+  }
+
+  previousPage(): void {
+    if (this.offset === 0) return;
+
+    this.offset = Math.max(0, this.offset - this.limit);
+    this.loadPosts();
+  }
+
+  nextPage(): void {
+    if (this.offset + this.limit >= this.total) return;
+
+    this.offset += this.limit;
+    this.loadPosts();
+  }
+
+  get totalPages(): number {
+    return Math.ceil(this.total / this.limit);
   }
 }

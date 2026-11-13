@@ -92,27 +92,48 @@ export class PostCard implements OnInit {
       },
     });
   }
+  
+  showDeleteModal = false;
+  deleteMessage = '';
+  deleteMessageType: 'success' | 'error' | '' = '';
+
+  openDeleteModal(): void {
+    this.showActions = false;
+    this.showDeleteModal = true;
+    this.deleteMessage = '';
+    this.deleteMessageType = '';
+  }
+
+  closeDeleteModal(): void {
+    if (this.loadingDelete) return;
+    this.showDeleteModal = false;
+  }
 
   deletePost(): void {
     if (!this.isOwner || this.loadingDelete) return;
 
     this.loadingDelete = true;
+    this.deleteMessage = '';
+    this.deleteMessageType = '';
 
-    this.postsService
-      .deletePost(this.post._id)
+    this.postsService.deletePost(this.post._id)
       .pipe(
         finalize(() => {
           this.loadingDelete = false;
           this.cdr.detectChanges();
         }),
-      )
-      .subscribe({
-        next: () => {
-          this.deleted.emit(this.post._id);
-        },
-        error: (error) => {
-          console.error('Error al eliminar la publicación:', error);
-        },
-      });
+      ).subscribe({
+      next: () => {
+        this.showDeleteModal = false;
+        this.deleted.emit(this.post._id);
+      },
+      error: (error) => {
+        console.error('Error al eliminar la publicación:', error);
+        this.deleteMessage = 'No se pudo eliminar la publicación. Intentá nuevamente.';
+        this.deleteMessageType = 'error';
+        this.showDeleteModal = false;
+      },
+    });
   }
+
 }

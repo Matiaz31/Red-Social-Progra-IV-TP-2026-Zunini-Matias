@@ -236,6 +236,10 @@
 
 .section-heading {
   margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
 
   h2 {
     margin: 0 0 6px;
@@ -249,6 +253,49 @@
     font-size: 15px;
   }
 }
+
+.sort-control {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+
+  label {
+    color: #718075;
+    font-size: 14px;
+    font-weight: 600;
+  }
+
+  select {
+    min-width: 150px;
+    padding: 10px 34px 10px 12px;
+    border: 1px solid #dce6da;
+    border-radius: 10px;
+    outline: none;
+    background-color: #ffffff;
+    color: #45574a;
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+
+    &:hover {
+      border-color: #a9bba9;
+    }
+
+    &:focus {
+      border-color: #718b78;
+      box-shadow: 0 0 0 3px rgba(113, 139, 120, 0.15);
+    }
+
+    option {
+      color: #45574a;
+      background: #ffffff;
+    }
+  }
+}
+
 
 /* Estado vacío */
 
@@ -393,10 +440,105 @@
   .empty-state {
     padding: 30px 18px;
   }
+
+  .section-heading {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 14px;
+  }
+
+  .sort-control {
+    width: 100%;
+    justify-content: space-between;
+
+    select {
+      flex: 1;
+      max-width: 190px;
+    }
+  }
 }
 
 .posts-list {
   display: flex;
   flex-direction: column;
   gap: 20px;
+}
+
+
+.pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
+  margin-top: 28px;
+  padding: 18px;
+  background: #ffffff;
+  border: 1px solid #e9ede7;
+  border-radius: 14px;
+
+  span {
+    color: #718075;
+    font-size: 14px;
+    font-weight: 600;
+  }
+
+  button {
+    padding: 9px 18px;
+    border: 1px solid #dce6da;
+    border-radius: 9px;
+    background: #edf2eb;
+    color: #617b68;
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s ease, color 0.2s ease;
+
+    &:hover:not(:disabled) {
+      background: #718b78;
+      color: #ffffff;
+    }
+
+    &:disabled {
+      opacity: 0.45;
+      cursor: not-allowed;
+    }
+  }
+}
+
+@media (max-width: 420px) {
+  .pagination {
+    gap: 10px;
+    padding: 14px 8px;
+
+    button {
+      padding: 8px 12px;
+    }
+
+    span {
+      font-size: 12px;
+    }
+  }
+}
+
+.success-toast {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: fit-content;
+  max-width: 100%;
+  margin: 0 0 20px;
+  padding: 12px 18px;
+  border: 1px solid #c9ddc9;
+  border-radius: 10px;
+  background: #edf5ec;
+  color: #526b57;
+  font-size: 14px;
+  font-weight: 600;
+  box-shadow: 0 4px 12px rgba(52, 68, 59, 0.06);
+
+  span {
+    font-size: 17px;
+    font-weight: 700;
+  }
 }

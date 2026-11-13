@@ -3,7 +3,7 @@
     <div class="post-avatar">U</div>
 
     <div class="post-author">
-      <strong>Usuario</strong>
+      <strong>{{ post.authorUsername }}</strong>
       <small>{{ post.createdAt | date:'dd/MM/yyyy HH:mm' }}</small>
     </div>
   </div>
@@ -18,7 +18,8 @@
         [alt]="'Imagen de la publicación: ' + post.title"
       />
     }
-    
+
+    <p class="post-author-username">@{{ post.authorUsername }}:</p>
     <p>{{ post.message }}</p>
   </div>
 
@@ -52,7 +53,7 @@
               type="button"
               class="delete-button"
               [disabled]="loadingDelete"
-              (click)="deletePost()"
+              (click)="openDeleteModal()"
             >
               {{ loadingDelete ? 'Eliminando...' : 'Eliminar publicación' }}
             </button>
@@ -61,5 +62,35 @@
       </div>
     }
   </div>
+  
+  @if (showDeleteModal) {
+    <div class="modal-overlay">
+      <div class="delete-modal" role="dialog" aria-modal="true" aria-labelledby="delete-modal-title">
+        <h3 id="delete-modal-title">¿Eliminar publicación?</h3>
 
+        <p>Esta acción no se puede deshacer. ¿Estás seguro de que querés eliminar esta publicación?</p>
+
+        <div class="modal-actions">
+          <button
+            type="button"
+            class="cancel-button"
+            [disabled]="loadingDelete"
+            (click)="closeDeleteModal()"
+          >
+            Cancelar
+          </button>
+
+          <button
+            type="button"
+            class="confirm-delete-button"
+            [disabled]="loadingDelete"
+            (click)="deletePost()"
+          >
+            {{ loadingDelete ? 'Eliminando...' : 'Eliminar' }}
+          </button>
+        </div>
+      </div>
+    </div>
+  }
+  
 </article>

@@ -13,6 +13,7 @@ import {
   CloudinaryService,
   UploadedFile,
 } from '../cloudinary/cloudinary.service';
+import { CommentsService } from '../comments/comments.service';
 
 @Injectable()
 export class PostsService {
@@ -20,6 +21,7 @@ export class PostsService {
     @InjectModel(Post.name)
     private readonly postModel: Model<PostDocument>,
     private readonly cloudinaryService: CloudinaryService,
+    private readonly commentsService: CommentsService,
   ) {}
 
   // Crear una publicación
@@ -102,6 +104,30 @@ export class PostsService {
             { $sort: sort },
             { $skip: offset },
             { $limit: limit },
+            {
+              $lookup: {
+                from: 'users',
+                localField: 'userId',
+                foreignField: '_id',
+                as: 'author',
+              },
+            },
+            {
+              $unwind: {
+                path: '$author',
+                preserveNullAndEmptyArrays: true,
+              },
+            },
+            {
+              $addFields: {
+                authorUsername: '$author.username',
+              },
+            },
+            {
+              $project: {
+                author: 0,
+              },
+            },
           ],
           total: [
             { $count: 'count' },
@@ -110,8 +136,32 @@ export class PostsService {
       },
     ]);
 
+    const posts: any[] = result?.data ?? [];
+
+    if (userId && posts.length > 0) {
+      const comments = await this.commentsService.findByPostIds(
+        posts.map((post) => post._id.toString()),
+      );
+
+      const commentsByPost = new Map<string, typeof comments>();
+
+      for (const comment of comments) {
+        const postId = comment.postId.toString();
+
+        if (!commentsByPost.has(postId)) {
+          commentsByPost.set(postId, []);
+        }
+
+        commentsByPost.get(postId)!.push(comment);
+      }
+
+      for (const post of posts) {
+        post.comments = commentsByPost.get(post._id.toString()) ?? [];
+      }
+    }
+
     return {
-      posts: result?.data ?? [],
+      posts,
       total: result?.total[0]?.count ?? 0,
       offset,
       limit,
@@ -166,7 +216,7 @@ export class PostsService {
       {
         $pull: { likes: new Types.ObjectId(userId) },
       },
-      { new: true },
+      { returnDocument: 'after' },
     );
 
     if (post) {
