@@ -36,6 +36,15 @@ El proyecto está desarrollado utilizando una arquitectura frontend y backend, c
 - Gestión de contraseñas con hash.
 - Carga de imágenes de perfil.
 
+### Sprint 2
+- Listado de publicaciones.
+- Creación de publicaciones con título, mensaje e imagen.
+- Eliminación de publicaciones propias.
+- Confirmación de eliminación y notificación del resultado.
+- Visualización y gestión de comentarios asociados a las publicaciones.
+- Carga y almacenamiento de imágenes mediante Cloudinary.
+- Interfaz de publicaciones y comentarios con diseño uniforme y adaptable.
+
 ## Estructura del proyecto
 
 ```text
