@@ -16,7 +16,7 @@ export class CommentsService {
     return this.commentModel
       .find({ postId: { $in: ids } })
       .populate('userId', 'username')
-      .sort({ createdAt: -1 })
+      .sort({ createdAt: 1 })
       .exec();
   }
 }
